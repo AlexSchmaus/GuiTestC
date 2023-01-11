@@ -7,13 +7,13 @@
 
 // Window Procedure Function - handles messages the app recieves from Windows when events occur
 LRESULT CALLBACK WndProc(
-	_In_	HWND	hWnd,						// a handle to the window
-	_In_	UINT	message,					// the message sent. Messages >> https://learn.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues#system-defined-messages
-	_In_	WPARAM	wParam,						// Additional info in the message, defined by the param: message
-	_In_	LPARAM	lParam						// Additional info in the message, defined by the param: message
+	_In_	HWND	hWnd,					// a handle to the window
+	_In_	UINT	message,				// the message sent. Messages >> https://learn.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues#system-defined-messages
+	_In_	WPARAM	wParam,					// Additional info in the message, defined by the param: message
+	_In_	LPARAM	lParam					// Additional info in the message, defined by the param: message
 ) {
 	PAINTSTRUCT ps;
-	HDC hdc;			// a handle to the context of the device - like, where to know where the window goes (screens, but we have to tell it that, basically)
+	HDC hdc;								// a handle to the context of the device - like, where to know where the window goes (screens, but we have to tell it that, basically)
 	TCHAR greeting[] = _T("Hello World!");
 
 	switch (message) {
@@ -123,9 +123,3 @@ int WINAPI WinMain(
 
 	return (int)msg.wParam;
 }
-
-
-
-
-
-
