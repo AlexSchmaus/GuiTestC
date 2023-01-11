@@ -1,7 +1,8 @@
 #include <windows.h>
 #include <tchar.h>		// abstraction that handles unicode.... I think. It defines the TCHAR macro, _T()
 
-
+// Alex Schmaus 1/1/2023
+// follow along from this tutorial: https://learn.microsoft.com/en-us/cpp/windows/walkthrough-creating-windows-desktop-applications-cpp?view=msvc-170
 
 
 // Window Procedure Function - handles messages the app recieves from Windows when events occur
@@ -23,6 +24,7 @@ LRESULT CALLBACK WndProc(
 
 		// Lay out window text, buttons, etc.
 		TextOut(hdc, 5, 5, greeting, _tcslen(greeting));   // For now, just put text in the top left
+
 		// end app layout
 
 		EndPaint(hWnd, &ps);
