@@ -1,13 +1,36 @@
 #include <windows.h>
 #include <tchar.h>		// abstraction that handles unicode.... I think. It defines the TCHAR macro, _T()
 
-// main function / entry point
+
+
+
+// Window Procedure Function - handles messages the app recieves from Windows when events occur
+LRESULT CALLBACK WndProc(
+	_In_	HWND	hWnd,						// a handle to the window
+	_In_	UINT	message,					// the message sent. Messages >> https://learn.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues#system-defined-messages
+	_In_	WPARAM	wParam,						// Additional info in the message, defined by the param: message
+	_In_	LPARAM	lParam						// Additional info in the message, defined by the param: message
+) {
+	// Logic goes here to handle the events
+	return (LRESULT)(1);
+}
+
+
+
+
+// main function / entry point -> _In_ is SAL Annotation https://learn.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2012/hh916383(v=vs.110)?redirectedfrom=MSDN
 int WINAPI WinMain(
 	_In_		HINSTANCE	hInstance,			// a handle to the current instance of the app
 	_In_opt_	HINSTANCE	hPrevInstance,		// a handle to the previous instance. Always NULL. Can be helpful for limiting the app to one instance only
 	_In_		LPSTR		lppCmdLine,			// the command line for the application..... wut?
 	_In_		int			nCmdShow			// controls how the window is shown. Hidden, Minimzed, etc. https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow
 ) {
+
+	//These are arrays of TCHAR
+	static TCHAR szWindowClass[] = _T("DesktopApp");
+	static TCHAR szTitle[] = _T("Windows Tutorial");
+
+
 
 	// Structure of type WNDCLASSEX that gives info about the window
 	WNDCLASSEX wcex;
@@ -31,10 +54,7 @@ int WINAPI WinMain(
 		return 1;
 	}
 
-	// Next, create a window. These are arrays of TCHAR
-	static TCHAR szWindowClass[] = _T("DesktopApp");
-	static TCHAR szTitle[] = _T("Windows Tutorial");
-
+	// Next, create a window.
 	HWND hWnd = CreateWindowEx(		// returns an object of the type HWND, which is a handle to a window. A handle is somewhat like a pointer that windows uses to keep track of open windows
 		WS_EX_OVERLAPPEDWINDOW,		// Another window style...
 		szWindowClass,				// Name of the app, as defined above
@@ -63,6 +83,16 @@ int WINAPI WinMain(
 	UpdateWindow(
 		hWnd
 	);
+
+	// Handle messages. Loop. Listen for messages that Windows OS sends. Then send the message to WndProc function
+	// &msg is the memory address of msg
+	MSG msg;
+	while (GetMessage(&msg, NULL, 0, 0)) {
+		TranslateMessage(&msg);		//
+		DispatchMessage(&msg);		//this sends it to the application's Window Procedure Function
+	}
+
+	return (int)msg.wParam;
 }
 
 
@@ -70,14 +100,3 @@ int WINAPI WinMain(
 
 
 
-
-
-// Window Procedure Function - handles messages the app recieves from Windows when events occur
-LRESULT CALLBACK WndProc(
-	_In_	HWND	hWnd,						// a handle to the window
-	_In_	UINT	message,					// the message sent. Messages >> https://learn.microsoft.com/en-us/windows/win32/winmsg/about-messages-and-message-queues#system-defined-messages
-	_In_	WPARAM	wParam,						// Additional info in the message, defined by the param: message
-	_In_	LPARAM	lParam						// Additional info in the message, defined by the param: message
-) {
-	// Logic goes here to handle the events
-}
