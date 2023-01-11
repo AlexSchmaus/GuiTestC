@@ -11,8 +11,35 @@ LRESULT CALLBACK WndProc(
 	_In_	WPARAM	wParam,						// Additional info in the message, defined by the param: message
 	_In_	LPARAM	lParam						// Additional info in the message, defined by the param: message
 ) {
-	// Logic goes here to handle the events
-	return (LRESULT)(1);
+	PAINTSTRUCT ps;
+	HDC hdc;			// a handle to the context of the device - like, where to know where the window goes (screens, but we have to tell it that, basically)
+	TCHAR greeting[] = _T("Hello World!");
+
+	switch (message) {
+	// WM_PAINT is occurs when a displayed window must be updated. This can occur when the user moves a window over our.
+	// Also, when the window is first displayed...... LOL
+	case WM_PAINT:
+		hdc = BeginPaint(hWnd, &ps);
+
+		// Lay out window text, buttons, etc.
+		TextOut(hdc, 5, 5, greeting, _tcslen(greeting));   // For now, just put text in the top left
+		// end app layout
+
+		EndPaint(hWnd, &ps);
+		break;
+	// happens when the window is closed.
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	// happens when a window is first created
+	//case WM_CREATE:
+	//	break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+		break;
+	}
+
+	return 0;
 }
 
 
